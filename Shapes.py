@@ -28,3 +28,20 @@ class Shape:
         
         self._x += dx   # update x & y with dx and dy
         self._y += dy
+
+
+    # Comparison Operators
+    def __eq__(self, other):   # looking if two forms are same
+        return(self._x == other._x) and (self._y == other._y)   # compare the x & y values
+    
+    def __gt__(self, other):
+        return(self._x > other._x) and (self._y > other._y)   # looking for if one form is greater than other
+    
+    def __lt__(self, other):   # looking for if one form is lessthan the other
+        return(self._x < self._y) and (other._x < other._y)  # compare x & y values as tuples
+    
+    def __ge__(self, other):
+        return(self._x >= other._x) and (self._y >= other._y)  # looking for if one form is greater than or equal with other    
+    
+    def __le__(self, other):
+        return(self._x <= other._x) and (self._y <= other._y)  # looking for if one form is less than or equal with other
