@@ -1,5 +1,11 @@
+import numbers
+from numbers import Number
 class Shape:
     def __init__(self, x=0, y=0):
+
+        if not isinstance(x, (numbers.Number)) or not isinstance(y, (numbers.Number)):
+            raise TypeError("x and y must be numeric vakues.")
+        
         # save position as internal
         self._x = x
         self._y = y
