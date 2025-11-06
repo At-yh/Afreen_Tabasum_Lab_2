@@ -1,4 +1,4 @@
-from shape import Shape   # here importing the shape class from shape.py
+from shapes import Shape   # here importing the shape class from shape.py
 from math import pi       
 
 class Circle(Shape):        # here inherits from Shape class
@@ -26,4 +26,15 @@ class Circle(Shape):        # here inherits from Shape class
         return isinstance(other, Circle) and self.radius == other.radius
     
 
+# comparison operators based on area
+def __lt__(self, other):
+    return self.area < other.area
 
+def __le__(self, other):
+    return self.area <= other.area
+
+def __gt__(self, other):
+    return self.area > other.area
+
+def __ge__(self, other):
+    return self.area >= other.area
