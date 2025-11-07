@@ -1,53 +1,69 @@
-import numbers
-from numbers import Number
+#   Base shape class used by Circle and Rectangle
+
+from __future__ import annotations
+from typing import Any
+
 class Shape:
-    def __init__(self, x=0, y=0):
+    def __init__(self, x: float = 0.0, y: float = 0.0):
+        # Validate inputs are numbers
+        if not isinstance(x, (int, float)) or not isinstance(y, (int, float)):
+            raise TypeError("x and y must be numbers (int or float).")
+        # store internally with underscore to make read-only properties
+        self._x = float(x)
+        self._y = float(y)
 
-        if not isinstance(x, (numbers.Number)) or not isinstance(y, (numbers.Number)):
-            raise TypeError("x and y must be numeric vakues.")
-        
-        # save position as internal
-        self._x = x
-        self._y = y
+    # read-only x property
+    @property
+    def x(self) -> float:
+        return self._x
+    
+    @# read-only y property 
+    @property
+    def y(self) -> float:
+        return self._y
+    
+    def translate(self, dx: float, dy: float) -> None:
+        # Move shape center by dx and dy. Raise TypeError if dx/dy not number.
+        if not isinstance(dx, (int, float)) or not isinstance(dy, (int, float)):
+            raise TypeError("dx and dy must be numbers (int or float).")
+        self._x += float(dx)
+        self._y += float(dy)
+
+    # area and perimeter are not implemented in base class( subclasses must provide)
+    @property
+    def area(self) -> float:
+        raise NotImplementedError("Subclasses must implement area property.")
 
     @property
-    def x(self):
-        return self._x  # this is only for read
+    def perimeter(self) -> float:
+        raise NotImplementedError("Subclasses must implement perimeter property.")
     
-    @property
-    def y(self):
-        return self._y  # this is only for read
+    # Comparisons based on area. Works across different shape types.
+    def _other_area(self, other: Any) -> float:
+        # Helper: return other.area if available, else raise TypeError.
+        if not hasattr(other, "area"):
+            raise TypeError("Can only campare shapes (objects with 'area' property).")
+        return other.area
     
-
-    def __str__(self):
-        return f"shape at ({self._x}, {self._y})"
+    def __eq__(self, other: Any) -> bool:
+        return NotImplemented
     
-    def __repr__(self):  # use it for how code will look like
-        return f"shape({self._x}, {self._y})"
+    def __lt__(self, other: Any) -> bool:
+        return self.area < self._other_area(other)
     
-    def translate (self, dx, dy):  # to see dx and dy are numbers
-        if not isinstance(dx, (int, float)):   # if dx is not a number, then will stop and give erroe.
-            raise TypeError("dx must be a number")
-        
-        elif not isinstance(dy, (int, float)):    # if dy is not a number, then will give error
-            raise TypeError("dy must be a number")
-        
-        self._x += dx   # update x & y with dx and dy
-        self._y += dy
-
-
-    # Comparison Operators
-    def __eq__(self, other):   # looking if two forms are same
-        return(self._x == other._x) and (self._y == other._y)   # compare the x & y values
+    def __le__(self, other: Any) -> bool:
+        return self.area <= self._other_area(other)
     
-    def __gt__(self, other):
-        return(self._x > other._x) and (self._y > other._y)   # looking for if one form is greater than other
+    def __gt__(self, other: Any) -> bool:
+        return self.area > self._other_area(other)
     
-    def __lt__(self, other):   # looking for if one form is lessthan the other
-        return(self._x < self._y) and (other._x < other._y)  # compare x & y values as tuples
+    def __ge__(self, other: Any) -> bool:
+        return self.area >= self._other_area(other)
     
-    def __ge__(self, other):
-        return(self._x >= other._x) and (self._y >= other._y)  # looking for if one form is greater than or equal with other    
+    def __repr__(self)  -> str:
+        # useful for debugging: exact class name and internal state
+        return f"{self.__class__.__name__}(x={self._x}, y={self._y})"
     
-    def __le__(self, other):
-        return(self._x <= other._x) and (self._y <= other._y)  # looking for if one form is less than or equal with other
+    def __str__(self) -> str:
+        # friendly string for users
+        return f"{self.__class__.__name__} centered at ({self._x}, {self._y})"
