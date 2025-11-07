@@ -1,50 +1,71 @@
-from shapes import Shape   # here importing the shape class from shape.py
-from math import pi   
-import matplotlib.pyplot as plt 
-from matplotlib.patches import circle as CirclePatch
+# Circle class that inherits from Shape
 
-class Circle(Shape):        # here inherits from Shape class
-    def __init__(self, x=0, y=0, radius=1):
+from __future__ import annotations
+from shapes import Shape   # base class  
+from typing import Any 
+import math 
+
+
+class Circle(Shape):        #  Inherits from Shape class
+    def __init__(self, x: float = 0.0, y: float = 0.0, radius: float =1.0) -> None:
         super().__init__(x, y)
-        if not isinstance(radius, (int, float)):
-            raise TypeError("radius must be a number")
-        if radius <= 0:
-            raise ValueError("radius must be positive")
-        self.radius = radius    
+        # Validate radius 
+        if not self._is_number(radius):
+            raise TypeError("radius must be a number (int or float).")
+        if radius < 0:
+            raise ValueError("radius cannot be negative")
+        self._radius = float(radius)
 
-    # read-only area property
-    @property
-    def area(self):
-        return pi * self.radius ** 2
+        # radius read-only property
+        @property 
+        def radius(self) -> float:
+            return self._radius    
+
+        # read-only area property
+        @property
+        def area(self) -> float:
+          return math.pi * self._radius ** 2
     
     # read-only perimeter property
     @property
-    def perimeter(self):
-        return 2 * pi * self.radius
+    def perimeter(self) -> float:
+        return 2 * math.pi * self._radius
     
-    def is_unit_circle(self):
-        return self.radius == 1 and self.x == 0 and self.y == 0
+    #  equality: same type and same radius (position ignored)
+    def __eq__(self, other: Any) -> bool:  
+        if not isinstance(other, Circle):
+            return False
+        return math.isclose(self.radius, other.radius)
     
-    #  equality check
-    def __eq__(self, other):  
-        return isinstance(other, Circle) and self.radius == other.radius
+    # comparisons by area: allow comparing to other Shapes
+    def _check_other_for_compare(self, other: Any) -> None:
+        from shapes import Shape as _Shape 
+        if not isinstance(other, Shape):
+            raise TypeError("Can only compare Circle with another Shape")
+        
+        def __lt__(self, other: Any) -> bool:
+            self._check_other_for_compare(other)
+            return self.area < other.area
+        
+        def __le__(self, other: Any) -> bool:
+            self._check_other_for_compare(other)
+            return self.area <= other.area
+        
+        def __gt__(self, other: Any) -> bool:
+            self._check_other_for_compare(other)
+            return self.area > other.area
+        
+        def __ge__(self, other: Any) -> bool:
+            self._check_other_for_compare(other)
+            return self.area >= other.area
+        
+        def is_unit_circle(self) -> bool:
+            # return Trure if radius == 1 (allowing small float error)
+            return math.isclose(self.radius, 1.0)
     
-
-# comparison operators based on area
-def __lt__(self, other):
-    return self.area < other.area
-
-def __le__(self, other):
-    return self.area <= other.area
-
-def __gt__(self, other):
-    return self.area > other.area
-
-def __ge__(self, other):
-    return self.area >= other.area
-
-def draw(self, ax):
-    # Drawing the circle using matplotlib.
-    circle_patch = CirclePatch((self.x, self.y), self.radius, fill=False, edgecolor = 'sky blue')
-    ax.add_patch(circle_patch)
-    ax.set_aspect('equal', adjustable = 'box')
+        # __repr__and__str__for helpful text
+        def __repr__(self) -> str:
+            return f"Circle(x={self.x}, y={self.y}, radius={self.radius})"
+    
+        def __str__(self) -> str:
+            return f"Circle with center ({self.x}, {self.y}) and radius {self.radius}"
