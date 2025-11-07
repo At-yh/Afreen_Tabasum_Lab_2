@@ -17,7 +17,7 @@ class Shape:
     def x(self) -> float:
         return self._x
     
-    @# read-only y property 
+    # read-only y property 
     @property
     def y(self) -> float:
         return self._y
