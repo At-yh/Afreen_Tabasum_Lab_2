@@ -1,9 +1,9 @@
 # Rectangle class that inherits from Shape
 
+from __future__ import annotations
+import math
 from shapes import Shape
 from typing import Any
-from __future__ import annotations
-import math 
 
 
 class Rectangle(Shape):   # Inherits from Shape class
@@ -72,4 +72,4 @@ class Rectangle(Shape):   # Inherits from Shape class
         return f"Rectangle(x={self.x}, y={self.y}, width={self.width}, height={self.height})"
     
     def __str__(self) -> str:
-        return f"Rectangle centered at ({self.x}, {self.y}) with width {self.width} and height {self.height}"
+        return f"Rectangle centered at ({self.x}, {self.y}) with width {self.width} and height {self.height}" 

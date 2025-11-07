@@ -1,9 +1,9 @@
 # Circle class that inherits from Shape
 
+import math
 from __future__ import annotations
 from shapes import Shape   # base class  
 from typing import Any 
-import math 
 
 
 class Circle(Shape):        #  Inherits from Shape class
@@ -24,7 +24,7 @@ class Circle(Shape):        #  Inherits from Shape class
         # read-only area property
         @property
         def area(self) -> float:
-          return math.pi * self._radius ** 2
+          return math.pi * (self._radius ** 2)  
     
     # read-only perimeter property
     @property
