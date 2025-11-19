@@ -43,10 +43,6 @@ class Circle(Shape):        #  Inherits from Shape class
             raise TypeError("Can only compare Circle with another Shape")
     
     # comparisons by area: allow comparing to other Shapes
-    def _check_other_for_compare(self, other: Any) -> None:
-        from shapes import Shape as _Shape 
-        if not isinstance(other, Shape):
-            raise TypeError("Can only compare Circle with another Shape")
         
         def __lt__(self, other: Any) -> bool:
             self._check_other_for_compare(other)

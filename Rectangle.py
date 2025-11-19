@@ -7,6 +7,7 @@ from typing import Any
 
 
 class Rectangle(Shape):   # Inherits from Shape class
+
     def __init__(self, x: float = 0.0, y: float = 0.0, width: float = 1.0, height: float = 1.0) -> None:
         super().__init__(x, y)
         # Validate width and height
@@ -44,8 +45,7 @@ class Rectangle(Shape):   # Inherits from Shape class
 
     # Comparison operators based on area
     def _check_other_for_comapre(self, other: Any) -> None:
-        from shapes import Shape as _Shape
-        if not isinstance(other, _Shape):
+        if not isinstance(other, Shape):
             raise TypeError("Can only compare Rectangle with another Shape")
         
     def __lt__(self, other: Any) -> bool:
@@ -64,12 +64,12 @@ class Rectangle(Shape):   # Inherits from Shape class
         self._check_other_for_compare(other)
         return self.area >= other.area
     
-    def is_square(self) -> bool:
-        # return True if width == height (allowing small float error)
-        return math.isclose(self.width, self.height)
+    # def is_square(self) -> bool:          ......................
+    #     # return True if width == height (allowing small float error)
+    #     return math.isclose(self.width, self.height)
     
     def __repr__(self) -> str:
         return f"Rectangle(x={self.x}, y={self.y}, width={self.width}, height={self.height})"
     
     def __str__(self) -> str:
-        return f"Rectangle centered at ({self.x}, {self.y}) with width {self.width} and height {self.height}" 
+        return f"Rectangle center at ({self.x}, {self.y}), width {self.width}, height {self.height}" 
