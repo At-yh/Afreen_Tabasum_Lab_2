@@ -7,14 +7,19 @@ from typing import Any
 
 
 class Circle(Shape):        #  Inherits from Shape class
-    def __init__(self, x: float = 0.0, y: float = 0.0, radius: float =1.0) -> None:
-        super().__init__(x, y)
-        # Validate radius 
-        if not self._is_number(radius):
-            raise TypeError("radius must be a number (int or float).")
-        if radius < 0:
-            raise ValueError("radius cannot be negative")
-        self._radius = float(radius)
+     def __init__(self, x, y, radius):
+        self._x = x
+        self._y = y
+        self._radius = radius 
+
+#     def __init__(self, x: float = 0.0, y: float = 0.0, radius: float =1.0) -> None:
+#         super().__init__(x, y)
+#         # Validate radius 
+#         if not self._is_number(radius):
+#             raise TypeError("radius must be a number (int or float).")
+#         if radius < 0:
+#             raise ValueError("radius cannot be negative")
+#         self._radius = float(radius)
 
         # radius read-only property
         @property 
@@ -32,13 +37,13 @@ class Circle(Shape):        #  Inherits from Shape class
         return 2 * math.pi * self.radius
     
     #  equality: same type and same radius (position ignored)
-    # def __eq__(self, other: Any) -> bool:  
-    #     if not isinstance(other, Circle):
-    #         return False
-    #     return self._radius == other._radius
+    def __eq__(self, other: Any) -> bool:  
+        if not isinstance(other, Circle):
+            return False
+        return self._radius == other._radius
 
-    def __eq__(self, other):
-        return 2 * math.pi * self.radius 
+    # def __eq__(self, other):
+    #     return 2 * math.pi * self.radius 
     
     # helper
     def _check_other_for_compare(self, other: Any) -> None:

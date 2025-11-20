@@ -7,16 +7,19 @@ from typing import Any
 
 
 class Rectangle(Shape):   # Inherits from Shape class
+    def __init__(self, width, height):
+        self._width = width
+        self._height = height
 
-    def __init__(self, x: float = 0.0, y: float = 0.0, width: float = 1.0, height: float = 1.0) -> None:
-        super().__init__(x, y)
-        # Validate width and height
-        if not self._is_number(width) or not self._is_number(height):
-            raise TypeError("width and height must be numbers (int or float)")
-        if width < 0 or height < 0:
-            raise ValueError("width and height cannot be negative")
-        self._width = float(width)
-        self._height = float(height)
+    # def __init__(self, x: float = 0.0, y: float = 0.0, width: float = 1.0, height: float = 1.0) -> None:
+    #     super().__init__(x, y)
+    #     # Validate width and height
+    #     if not self._is_number(width) or not self._is_number(height):
+    #         raise TypeError("width and height must be numbers (int or float)")
+    #     if width < 0 or height < 0:
+    #         raise ValueError("width and height cannot be negative")
+    #     self._width = float(width)
+    #     self._height = float(height)
 
     @property
     def width(self) -> float:
@@ -40,7 +43,7 @@ class Rectangle(Shape):   # Inherits from Shape class
     def __eq__(self, other: Any) -> bool:
         if not isinstance(other, Rectangle):
             return False
-        return math.isclose(self.width, other.width) and math.isclose(self.height, other.height)
+        return self._width == other._width and self._height == other._height
     
 
     # Comparison operators based on area
