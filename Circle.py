@@ -29,13 +29,16 @@ class Circle(Shape):        #  Inherits from Shape class
     # read-only perimeter property
     @property
     def perimeter(self) -> float:
-        return 2 * math.pi * self._radius
+        return 2 * math.pi * self.radius
     
     #  equality: same type and same radius (position ignored)
-    def __eq__(self, other: Any) -> bool:  
-        if not isinstance(other, Circle):
-            return False
-        return math.isclose(self.radius, other.radius)
+    # def __eq__(self, other: Any) -> bool:  
+    #     if not isinstance(other, Circle):
+    #         return False
+    #     return self._radius == other._radius
+
+    def __eq__(self, other):
+        return 2 * math.pi * self.radius 
     
     # helper
     def _check_other_for_compare(self, other: Any) -> None:
@@ -68,5 +71,5 @@ class Circle(Shape):        #  Inherits from Shape class
         def __repr__(self) -> str:
             return f"Circle(x={self.x}, y={self.y}, radius={self.radius})"
     
-        def __str__(self) -> str:
-            return f"Circle with center ({self.x}, {self.y}) and radius {self.radius}"
+        # def __str__(self) -> str:
+        #     return f"Circle with center ({self.x}, {self.y}) and radius {self.radius}"
