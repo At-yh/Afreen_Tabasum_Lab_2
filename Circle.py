@@ -5,7 +5,7 @@ import math
 from shapes import Shape   # base class  
 from typing import Any 
 
-
+# It has 1 extra attribute radius
 class Circle(Shape):        #  Inherits from Shape class
     def __init__(self, x, y, radius):
         self._x = x

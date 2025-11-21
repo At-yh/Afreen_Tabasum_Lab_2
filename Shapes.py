@@ -1,4 +1,5 @@
 #   Base shape class used by Circle and Rectangle
+# This class stores the common information for all shapes, the centre position x and y
 
 from __future__ import annotations
 from typing import Any
@@ -11,7 +12,7 @@ class Shape:
         self._x = float(x)
         self._y = float(y)
         
-
+    #  Both x & y are read only properties means we can only read them but cannot chng them directly
     # read-only x property
     @property
     def x(self) -> float:
@@ -22,6 +23,7 @@ class Shape:
     def y(self) -> float:
         return self._y
     
+    # Also has a translate method which moves the shape by adding a change in x and y called dx and dy
     def translate(self, dx: float, dy: float) -> None:
         # Move the shape by dx in x-direction and dy in y-direction.
         # Raises TypeError if dx or dy are not numeric.
@@ -30,7 +32,7 @@ class Shape:
         self._x += float(dx)
         self._y += float(dy)
 
-    # helper
+    # helper : this also defines a helper method to check if value is a number
     @staticmethod
     def _is_number(value: Any) -> bool:
         return isinstance(value, (int, float))
